@@ -22,6 +22,8 @@
   };
   var NAMES = { facebook: "Facebook", instagram: "Instagram", tiktok: "TikTok", youtube: "YouTube" };
   var PLAY = '<span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>';
+  // "Opens elsewhere" arrow for links that leave the page. Drawn, not a font glyph, so it centres the same in every font.
+  var OUT = '<svg class="out" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16L16 8M9 8h7v7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
   /* ---------- render from config ---------- */
   function posterImg(src, alt, cls) {
@@ -64,8 +66,8 @@
         '<p class="lf-meta">' + esc(f.meta) + "</p>" +
         '<div class="lf-actions"><button class="btn btn-fs" type="button" data-fs="' + i + '">' +
         '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
-        (lang === "ne" ? "पूरा स्क्रिन" : "Full screen") + "</button>" +
-        '<a class="btn" href="' + esc(f.link) + '" target="_blank" rel="noopener">' + (lang === "ne" ? "YouTube मा हेर्नुहोस्" : "Watch on YouTube") + " ↗</a></div></div></article>";
+        "<span>" + (lang === "ne" ? "पूरा स्क्रिन" : "Full screen") + "</span></button>" +
+        '<a class="btn" href="' + esc(f.link) + '" target="_blank" rel="noopener"><span>' + (lang === "ne" ? "YouTube मा हेर्नुहोस्" : "Watch on YouTube") + "</span>" + OUT + "</a></div></div></article>";
     }).join("");
   }
 
@@ -249,7 +251,7 @@
         '<div class="reel-media"></div><div class="reel-shade"></div>' +
         '<div class="reel-cap"><b>' + esc(ttl(f)) + "</b><span>" + esc(f.en || "") + "</span>" +
         (f.result ? "<em>" + esc(f.result) + " " + esc(tr(f.unit)) + "</em>" : "") +
-        (f.link ? '<a href="' + esc(f.link) + '" target="_blank" rel="noopener">' + (lang === "ne" ? "प्लेटफर्ममा खोल्नुहोस्" : "Open" + (where ? " on " + where : "")) + " ↗</a>" : "") +
+        (f.link ? '<a href="' + esc(f.link) + '" target="_blank" rel="noopener"><span>' + (lang === "ne" ? "प्लेटफर्ममा खोल्नुहोस्" : "Open" + (where ? " on " + where : "")) + "</span>" + OUT + "</a>" : "") +
         "</div></div>";
     }).join("");
     if (reelIO) reelIO.disconnect();

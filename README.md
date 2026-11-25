@@ -13,10 +13,14 @@ Open <http://127.0.0.1:4173/>. Opening `index.html` directly also works, but the
 ## Files
 
 - `index.html`: structure and all copy (English in the tag, Nepali in `data-ne`).
-- `css/styles.css`: the look. Mobile first. Colours are tokens at the top (`:root` for dark, `[data-theme="light"]` for light).
+- `privacy.html`, `terms.html`: privacy policy and terms of use, same look, same switches, English and Nepali.
+- `404.html`: the page the host shows for any address that does not exist. Every path in it starts at the site root (`/css/...`), because it is served at whatever address was asked for.
+- `css/styles.css`: the look, for every page. Mobile first. Colours are tokens at the top (`:root` for dark, `[data-theme="light"]` for light). The `@font-face` rules are the first block.
 - `js/config.js`: **everything that changes by hand**. Email, social links, reach numbers, films, links, posters, and which film is the latest.
-- `js/main.js`: rendering, language and theme switches, animation, player, contact form.
-- `assets/`: favicon. Put the real logo and final posters here.
+- `js/main.js`: the home page: rendering, language and theme switches, animation, player, contact form.
+- `js/page.js`: the plain pages (privacy, terms, 404): language and theme switches with the same saved choices as the home page, and the email from `js/config.js`.
+- `assets/`: favicon, `og-image.png` (the 1200x630 picture shown when the site is shared), and `fonts/`. Put the real logo and final posters here.
+- `robots.txt`, `sitemap.xml`: for search engines, for https://khuldulinp.com/. Add a line to the sitemap when a page is added. There is no `CNAME` file on purpose: the domain is set in the hosting settings.
 
 ## The page as one scroll
 
@@ -57,6 +61,26 @@ Intro (the diyo), the landing (brand name, one line, two buttons, the latest fil
 A full screen straight after the landing, where the numbers are the page: the total views very large, then the four platforms as large figures, with their details, a share bar and the source line set small underneath. The figures, decimals and the source line all come from `headline`, `reach` and `statsNote` in `js/config.js`.
 
 The motion is one quiet entrance, the first time the page scrolls into view: each figure rises a few pixels, fades in and counts up from zero to its exact value, one platform a beat after the other (`data-delay` on each figure, `countUp` in `js/main.js`). Nothing loops. With reduced motion turned on, the final figures show at once. Switching language redraws the platform figures and counts them again.
+
+## Buttons
+
+One system on every page (the "Buttons" block near the end of `css/styles.css`):
+
+- Actions are pills with **no outline**. Their shape is a soft tonal fill (`--tone`, stronger `--tone-hi` on hover), which reads in both themes. The main action on a screen is the ember fill (`.btn-fill`). In the documentaries the same pills use the cold palette.
+- Icon only controls (theme, reel mode, player close) are circles with the same fill. Over films they use a darker fill instead of a hairline.
+- Keyboard focus is one ember ring, 3px outside the shape, following the pill or circle.
+- The small nav controls and the Copy button keep a 44px tall touch area with an invisible margin, so the nav row still fits a 390px phone.
+- Icons inside buttons are drawn SVG (play, arrows, close, "opens elsewhere"), never font glyphs.
+
+Why labels looked off centre before, and the fix: the text face (Anek Devanagari) has a very deep descender, kept for Devanagari marks below the line. A browser centres the font's ascender to descender box in the line box, so the middle of every line sat only 0.16em above the baseline, while the middle of a capital, and of the Devanagari headline (both about 0.64em tall), is 0.32em above it. Every label therefore sat about 0.16em high: 2.5px in a 16px button, 2.1px in the 13px language switch. Arrows and the close cross also came from fallback fonts with their own heights. The ascender and descender in the self-hosted files were rebalanced to keep the same total but put the line's middle at half the cap height (see Type), so labels centre in every browser, Safari included, without nudges. Measured after the change, at 1440 and 390 wide, both themes, English and Nepali: the middle of the capitals or the Devanagari headline is within 1px of the middle of every button (0.5px for 48px buttons, 1px for the 40px nav button), icons are exactly centred, and the content is horizontally centred to 0.2px.
+
+## Privacy, terms and the other pages
+
+- `privacy.html` and `terms.html` are linked from the footer of every page. Both are dated 26 November 2026; change the date at the top of the page and in `sitemap.xml` when the text changes.
+- The privacy policy describes what the code does today: the contact form only opens the visitor's email app (`mailto:`), theme and language are kept in `localStorage` (`khulduli-theme`, `khulduli-lang`), films load YouTube (privacy enhanced mode) and TikTok players when they scroll into view, in reel mode or on Full screen, some posters load from YouTube's image server, the host keeps standard server logs, and there are no cookies of our own, analytics, ads, accounts or payments. **If any of that changes (an analytics tool, a form that posts to a server, a new embed), the policy must change with it.**
+- No cookie banner: the site sets no cookies and stores nothing but the two choices above, and only on the visitor's device. The embedded players may set their own cookies once they load. Nepal's law has no cookie consent rule; a banner would be worth adding only if the site starts to target visitors in the EU or the UK, or adds analytics.
+- The home page has a description, a canonical link, Open Graph and Twitter card tags, with `assets/og-image.png` (drawn from the site's own diyo and type) as the share picture.
+
 ## The film at the top
 
 The frame in the hero shows the film marked `latest: true` in `js/config.js` (today छठ, in `moreReels`). Move the flag to the new film when one is out. Only one film should have it.
@@ -69,6 +93,7 @@ The frame in the hero shows the film marked `latest: true` in `js/config.js` (to
 4. **Email.** One value, `email` in `js/config.js`. Change it when the @khuldulinp.com address is live.
 5. **Numbers.** `headline` and `reach` in `js/config.js` feed the Views and reach page. Each film's own result (for example `4.1M+`) is on that film in `shorts`.
 6. **Nepali copy.** Written for this pass, needs a read by a native editor.
+7. **Privacy policy and terms.** Drafts in plain language, written from what the code does. They need a read by a lawyer in Nepal before launch, in both languages (the Nepali is our own rendering, and the names of the Acts in it, वैयक्तिक गोपनीयतासम्बन्धी ऐन, २०७५ and प्रतिलिपि अधिकार ऐन, २०५९, should be checked against the official titles). Points to confirm: the contact email (still the gmail address from `js/config.js`), whether a registered business name or address must be shown, and how long quote emails are kept.
 
 ## Type
 
@@ -79,7 +104,9 @@ Two families, set by role. Each one is drawn for Latin and Devanagari together, 
 | `--display` | **Vesper Libre** by Mota Italic, weights 400, 500, 700, 900 | brand name, hero title, intro line, section headings, film titles, card and service headings, the about lede, numbers, email address, footer | SIL Open Font License 1.1 ([Google Fonts metadata](https://github.com/google/fonts/tree/main/ofl/vesperlibre)) |
 | `--text` | **Anek Devanagari** by Ek Type, variable weight 400 to 700 | body text, nav, buttons, form, captions, chips, and all small labels (same face in capitals, spaced) | SIL Open Font License 1.1 ([Google Fonts metadata](https://github.com/google/fonts/tree/main/ofl/anekdevanagari)) |
 
-Both load from Google Fonts in one `<link>` in `index.html`. The OFL allows free commercial use on a website, including self hosting; the main limits are that the font files are not sold on their own, and that a modified copy may need a new name.
+Both are self-hosted in `assets/fonts/` (no font service is contacted), with the `@font-face` rules at the top of `css/styles.css` and `font-display: swap`. Only the Latin and Devanagari subsets are there, as woff2: Anek Devanagari as one variable file per script, Vesper Libre at 400, 500 and 700 for both scripts and 900 for Devanagari only (900 sets only the Devanagari brand name). The browser downloads a file only when a page uses that script and weight. Each page preloads the Latin text file; the home page also preloads the 900 Devanagari file for the brand name. The licence texts are `assets/fonts/OFL-AnekDevanagari.txt` and `OFL-VesperLibre.txt`, and must stay next to the files. The OFL allows free commercial use on a website, including self hosting and modified copies; the limits are that the font files are not sold on their own and stay under the OFL. Neither family declares a Reserved Font Name, so the modified Anek files keep their name.
+
+**The Anek Devanagari files are modified** (see Buttons below): in both files the ascender and descender in `hhea` and `OS/2` (typo and win) were changed from 2026 / 1385 to 2345 / 1066 units (2000 units per em). Nothing else changed: same total height, same glyphs. If the files are ever downloaded again, apply the same change (fontTools: set `hhea.ascent`, `OS/2.sTypoAscender`, `OS/2.usWinAscent` to 2345, the descenders to 1066, save as woff2), or every button label will sit high again.
 
 - Tokens are at the top of `css/styles.css`: `--display`, `--text`, `--w-title`, `--w-head`, `--w-num`, `--label-track`. The full role map is the "Type system" block at the end of the file.
 - Neither family has an italic, so nothing is set in italic.

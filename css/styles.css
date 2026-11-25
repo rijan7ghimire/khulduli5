@@ -1,6 +1,39 @@
 /* ==================================================================
    खुल्दुली · dark, cinematic, poster led. Mobile first.
 ================================================================== */
+/* ---------- type: self-hosted, SIL Open Font License 1.1 (assets/fonts/OFL-*.txt) ----------
+   Only the Latin and Devanagari subsets the pages use. The browser fetches a file only when
+   the page needs that script and weight. Weight 900 sets only the Devanagari brand name, so it
+   has no Latin file. The text face's vertical metrics are rebalanced in its two files so capitals and the Devanagari headline sit in the middle of every line box
+   (see README, "Buttons"). */
+@font-face { font-family: "Anek Devanagari"; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url("../assets/fonts/anek-devanagari-var-devanagari.woff2") format("woff2");
+  unicode-range: U+0900-097F, U+1CD0-1CF4, U+1CF7-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B0A; }
+@font-face { font-family: "Anek Devanagari"; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url("../assets/fonts/anek-devanagari-var-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Vesper Libre"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("../assets/fonts/vesper-libre-400-devanagari.woff2") format("woff2");
+  unicode-range: U+0900-097F, U+1CD0-1CF4, U+1CF7-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B0A; }
+@font-face { font-family: "Vesper Libre"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("../assets/fonts/vesper-libre-400-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Vesper Libre"; font-style: normal; font-weight: 500; font-display: swap;
+  src: url("../assets/fonts/vesper-libre-500-devanagari.woff2") format("woff2");
+  unicode-range: U+0900-097F, U+1CD0-1CF4, U+1CF7-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B0A; }
+@font-face { font-family: "Vesper Libre"; font-style: normal; font-weight: 500; font-display: swap;
+  src: url("../assets/fonts/vesper-libre-500-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Vesper Libre"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("../assets/fonts/vesper-libre-700-devanagari.woff2") format("woff2");
+  unicode-range: U+0900-097F, U+1CD0-1CF4, U+1CF7-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B0A; }
+@font-face { font-family: "Vesper Libre"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("../assets/fonts/vesper-libre-700-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Vesper Libre"; font-style: normal; font-weight: 900; font-display: swap;
+  src: url("../assets/fonts/vesper-libre-900-devanagari.woff2") format("woff2");
+  unicode-range: U+0900-097F, U+1CD0-1CF4, U+1CF7-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B0A; }
+
 /* Dark is the default theme. Light is [data-theme="light"], switched in the nav. */
 :root {
   color-scheme: dark;
@@ -341,8 +374,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .btn-quote { margin-top: auto; align-self: flex-start; }
 .svc > p, .tiers { margin-bottom: 24px; }
 .svc { min-height: 0; }
-.btn-quote i { font-style: normal; transition: transform .4s var(--ease); }
-.btn-quote:hover i { transform: translateX(5px); }
 
 /* ---------- contact ---------- */
 .contact { overflow: hidden; }
@@ -942,3 +973,112 @@ h1, h2, h3, .lede, .big-num, .mail-link { font-kerning: normal; }
   /* the latest film fits in the first screen on short laptop screens */
   .hero-poster { width: min(100%, 400px, calc((100svh - 190px) * 9 / 16)); }
 }
+
+
+/* ==================================================================
+   Buttons: one system on every page.
+   - Actions are pills with no outline. The shape is a soft tonal fill (--tone)
+     that reads in both themes. The main action is the ember fill.
+     Icon only controls are circles with the same fill.
+   - Labels are centred by the font, not by nudging: the text face's line box
+     used to sit 0.16em low against its capitals (a deep descender kept for
+     Devanagari marks), so every label looked high. Its vertical metrics are
+     rebalanced in assets/fonts (README, "Buttons"), and caps and the Devanagari
+     headline now sit in the middle of any line box.
+   - Icons are drawn SVG, never font glyphs, so no fallback font can stretch a
+     button or move its label.
+   - Small controls keep a 44px tall touch area with an invisible margin.
+================================================================== */
+:root { --tone: rgba(239, 229, 210, .085); --tone-hi: rgba(239, 229, 210, .15); }
+[data-theme="light"] { --tone: rgba(32, 23, 15, .075); --tone-hi: rgba(32, 23, 15, .13); }
+
+.btn, .theme, .lang, .copy, .social a, .reels-btn, .reel-cap a { position: relative; border: 0; -webkit-tap-highlight-color: transparent; }
+.btn { background: var(--tone); color: var(--ink); line-height: 1.35; }
+.btn:hover { background: var(--tone-hi); }
+.btn-fill, .btn-fill:hover { background: linear-gradient(135deg, #efa443, #e56d17 55%, #cc3f43); color: #1a0d04; }
+.btn svg { flex: 0 0 auto; }
+.btn .out { width: 16px; height: 16px; }
+.btn-quote .arr { width: 18px; height: 18px; transition: transform .4s var(--ease); }
+.btn-quote:hover .arr { transform: translateX(4px); }
+
+/* the nav row: theme, language, quote */
+.theme { background: var(--tone); color: var(--ink-2); transition: color .3s, background .3s; }
+.theme:hover { background: var(--tone-hi); color: var(--ink); }
+.lang { background: var(--tone); transition: background .3s; }
+.lang:hover { background: var(--tone-hi); }
+/* two equal halves (0 to 38px, 38 to 76px); the thumb sits 3px inside the active half */
+.lang span { padding-left: .04em; } /* the tracking follows every letter, the last one too */
+.lang i { top: 3px; left: 3px; width: 32px; height: 30px; }
+[data-lang="ne"] .lang i { transform: translateX(38px); }
+.theme::after { content: ""; position: absolute; inset: -4px; }
+.lang::after, .nav .btn-sm::after { content: ""; position: absolute; inset: -4px 0; }
+
+/* contact */
+.copy { min-height: 40px; padding: 0 16px; background: var(--tone); color: var(--ink-2); font-weight: 600; transition: background .3s, color .3s; }
+.copy:hover, .copy.done { background: var(--tone-hi); color: var(--ink); }
+.copy::after { content: ""; position: absolute; inset: -2px 0; }
+.social a { padding: 0 18px; background: var(--tone); }
+.social a:hover { background: var(--ink); color: var(--bg); }
+
+/* documentaries: the same pills in the cold palette */
+.lf-info .btn { background: rgba(var(--cold-rgb), .12); color: var(--cold-3); }
+.lf-info .btn:hover { background: rgba(var(--cold-rgb), .2); color: var(--cold-3); }
+.lf-info .btn-fs, .lf-info .btn-fs:hover { background: var(--cold); color: var(--lf-bg); }
+
+/* over films (always dark): a darker fill instead of a hairline */
+.reels-btn { background: rgba(10, 8, 6, .62); }
+.player-close { display: grid; place-items: center; border: 0; background: rgba(var(--ink-rgb), .1); }
+.player-close svg { width: 20px; height: 20px; }
+.reel-cap a { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 14px; background: rgba(0, 0, 0, .5); }
+.reel-cap a .out { width: 14px; height: 14px; }
+.reel-cap a span { font-size: inherit; color: inherit; line-height: inherit; } /* not the caption line rule above */
+
+/* keyboard focus: one ring, following the shape */
+:is(.btn, .lang, .copy, .social a, .reel-cap a):focus-visible { outline: 2px solid var(--ember-2); outline-offset: 3px; border-radius: 999px; }
+:is(.theme, .reels-btn, .player-close):focus-visible { outline: 2px solid var(--ember-2); outline-offset: 3px; border-radius: 50%; }
+.lf-info .btn:focus-visible { outline-color: var(--cold); }
+
+/* ---------- footer links: privacy and terms, on every page ---------- */
+.foot-links { display: flex; flex-wrap: wrap; gap: 0 22px; font-size: 14.5px; }
+.foot-links a { display: inline-flex; align-items: center; min-height: 44px; color: var(--ink-2); text-decoration: underline; text-decoration-color: rgba(var(--ink-rgb), .28); text-underline-offset: 4px; transition: color .3s, text-decoration-color .3s; }
+.foot-links a:hover, .foot-links a[aria-current="page"] { color: var(--ink); text-decoration-color: var(--ember); }
+.foot-in .foot-copy { margin-top: 0; }
+@media (min-width: 720px) {
+  .foot-in { align-items: center; }
+  .foot-links { margin-left: auto; }
+  .foot-in .foot-copy { margin-left: 0; }
+}
+
+/* ---------- plain pages: privacy, terms, 404 ---------- */
+.page-main { padding: calc(112px + env(safe-area-inset-top)) 0 56px; }
+.legal { max-width: 820px; }
+.legal-head { margin-bottom: 30px; }
+.legal h1 { font-family: var(--display); font-weight: var(--w-head); font-size: clamp(42px, 10vw, 76px); line-height: 1.08; letter-spacing: -.015em; }
+[data-lang="ne"] .legal h1 { line-height: 1.45; }
+.legal-date { margin-top: 12px; font-size: 14px; color: var(--ink-3); }
+.legal-lede { margin-top: 20px; max-width: 34em; font-family: var(--display); font-weight: 400; font-size: clamp(20px, 4.4vw, 26px); line-height: 1.45; }
+.legal-sum { display: grid; gap: 10px; padding: 22px; border-radius: var(--r); background: var(--tone); }
+.legal section { margin-top: 44px; }
+.legal section > * + * { margin-top: 12px; }
+.legal h2 { display: flex; align-items: baseline; gap: 14px; font-family: var(--display); font-weight: var(--w-head); font-size: clamp(24px, 5.4vw, 32px); line-height: 1.25; letter-spacing: -.01em; }
+[data-lang="ne"] .legal h2 { line-height: 1.5; letter-spacing: 0; }
+.legal h2 .n { flex: 0 0 auto; font-family: var(--text); font-weight: 500; font-size: 13px; letter-spacing: var(--label-track); color: var(--ember-2); }
+.legal p, .legal li { max-width: 40em; color: var(--ink-2); font-size: 17px; }
+.legal .legal-sum li { color: var(--ink); }
+.legal b { color: var(--ink); font-weight: 600; }
+.legal ul:not(.legal-sum) { display: grid; gap: 8px; }
+.legal li { position: relative; padding-left: 22px; }
+.legal li::before { content: ""; position: absolute; left: 3px; top: .7em; width: 6px; height: 6px; border-radius: 50%; background: var(--ember); }
+.legal p a, .legal li a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--ember); text-underline-offset: 3px; }
+.legal .legal-mail { font-family: var(--display); font-weight: 500; font-size: clamp(22px, 5vw, 32px); line-height: 1.3; overflow-wrap: anywhere; }
+.legal-mail a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--ember); text-decoration-thickness: 1px; text-underline-offset: 6px; }
+.legal-mail a:hover { color: var(--ember-2); }
+.legal-end { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 56px; }
+
+.nf { min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: calc(100px + env(safe-area-inset-top)) var(--pad) 48px; text-align: center; }
+.nf-diyo { position: relative; width: clamp(130px, 30vw, 180px); aspect-ratio: 200 / 210; margin-bottom: 18px; --L: .35; }
+.nf-diyo svg { width: 100%; height: 100%; overflow: visible; filter: brightness(calc(.45 + var(--L) * .55)); }
+.nf h1 { font-family: var(--display); font-weight: var(--w-head); font-size: clamp(40px, 10vw, 72px); line-height: 1.1; letter-spacing: -.015em; }
+[data-lang="ne"] .nf h1 { line-height: 1.45; }
+.nf-text { margin-top: 14px; max-width: 28em; color: var(--ink-2); font-size: 18px; }
+.nf-cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 28px; }
