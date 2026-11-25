@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en" data-lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>खुल्दुली · Khulduli · Nepali stories, told cinematically</title>
+<meta name="description" content="खुल्दुली tells Nepali stories as cinematic short films and long documentaries. 22M+ views across four platforms in 2026.">
+<meta name="theme-color" content="#070504">
+<meta property="og:title" content="खुल्दुली · Khulduli">
+<meta property="og:description" content="Nepali stories, told cinematically. 22M+ views across four platforms in 2026.">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<!-- Theme before the styles load, so the page never flashes the wrong one. Dark is the default. -->
+<script>try{if(localStorage.getItem("khulduli-theme")==="light"){document.documentElement.setAttribute("data-theme","light");document.querySelector('meta[name="theme-color"]').setAttribute("content","#f4ede1");}}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Type: Vesper Libre (display) and Anek Devanagari (text). Both cover Latin and Devanagari. See README. -->
+<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400..700&family=Vesper+Libre:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- Shared paint for the two diyo drawings. -->
+<svg class="defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="dyBody" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#2a0e05"/><stop offset=".24" stop-color="#6d2a0d"/><stop offset=".52" stop-color="#a44c1b"/><stop offset=".8" stop-color="#65250b"/><stop offset="1" stop-color="#230b04"/></linearGradient>
+    <linearGradient id="dyDepth" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".5"/></linearGradient>
+    <linearGradient id="dyRim" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#c9773a"/><stop offset=".6" stop-color="#934015"/><stop offset="1" stop-color="#6a290d"/></linearGradient>
+    <linearGradient id="dyPetal" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#b9622a"/><stop offset=".7" stop-color="#843612"/><stop offset="1" stop-color="#5a210a"/></linearGradient>
+    <linearGradient id="dyFoot" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#2a0e05"/><stop offset=".5" stop-color="#83370f"/><stop offset="1" stop-color="#2a0e05"/></linearGradient>
+    <radialGradient id="dyOil" cx=".5" cy=".4" r=".6"><stop offset="0" stop-color="#5e3210"/><stop offset=".6" stop-color="#341707"/><stop offset="1" stop-color="#1a0a03"/></radialGradient>
+    <radialGradient id="dySheen" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffd68c" stop-opacity=".85"/><stop offset=".45" stop-color="#ff9632" stop-opacity=".3"/><stop offset="1" stop-color="#ff9632" stop-opacity="0"/></radialGradient>
+    <radialGradient id="dyWarm" cx=".5" cy="0" r=".85"><stop offset="0" stop-color="#ffaa50" stop-opacity=".5"/><stop offset="1" stop-color="#ff8c28" stop-opacity="0"/></radialGradient>
+    <radialGradient id="dyHalo" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffb04a" stop-opacity=".3"/><stop offset=".45" stop-color="#ff7a1a" stop-opacity=".08"/><stop offset="1" stop-color="#ff7a1a" stop-opacity="0"/></radialGradient>
+    <linearGradient id="dyF1" x1="0" x2="0" y1="1" y2="0"><stop offset="0" stop-color="#ffcf5a"/><stop offset=".45" stop-color="#ff8a1f"/><stop offset=".85" stop-color="#e2460c"/><stop offset="1" stop-color="#c0300a" stop-opacity=".5"/></linearGradient>
+    <linearGradient id="dyF2" x1="0" x2="0" y1="1" y2="0"><stop offset="0" stop-color="#fff6d6"/><stop offset=".6" stop-color="#ffd36a"/><stop offset="1" stop-color="#ffab33" stop-opacity=".8"/></linearGradient>
+    <clipPath id="dyClip"><path d="M24 120C26 154 60 176 100 176C140 176 174 154 176 120Z"/></clipPath>
+  </defs>
+</svg>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"><span></span></div>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <a class="brand" href="#top" aria-label="खुल्दुली home">
+    <span class="mark" aria-hidden="true">खु<svg viewBox="0 0 24 24"><g stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 20 9 15"/><path d="M12 3v7"/><path d="M3 11h6"/><path d="M17 5l-3 5"/><path d="M21 12h-5"/></g></svg></span>
+    <span class="brand-name">खुल्दुली</span>
+  </a>
+  <nav class="nav-links" aria-label="Sections">
+    <a href="#reach" data-ne="पहुँच">Reach</a>
+    <a href="#shorts" data-ne="फिल्म">Films</a>
+    <a href="#longform" data-ne="डकुमेन्ट्री">Documentaries</a>
+    <a href="#services" data-ne="सेवा">Services</a>
+  </nav>
+  <div class="nav-right">
+    <button class="theme" id="theme" type="button" aria-pressed="false">
+      <svg class="t-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <svg class="t-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      <span class="sr" data-ne="उज्यालो थिम">Light theme</span>
+    </button>
+    <button class="lang" id="lang" type="button" aria-label="Switch language">
+      <span data-l="en">EN</span><span data-l="ne" data-ne="ने">NE</span><i aria-hidden="true"></i>
+    </button>
+    <a class="btn btn-sm" href="#contact" data-ne="सम्पर्क">Get a quote</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============ INTRO: the diyo is lit by scrolling ============ -->
+<section class="intro" id="intro" data-pin aria-label="खुल्दुली">
+  <div class="intro-stage">
+    <div class="intro-glow" aria-hidden="true"></div>
+    <div class="intro-halo" aria-hidden="true"></div>
+    <div class="diyo intro-diyo" aria-hidden="true"><svg viewBox="0 0 200 210" focusable="false"><circle class="dy-glow" cx="100" cy="82" r="64" fill="url(#dyHalo)"/><ellipse class="dy-shadow" cx="100" cy="197" rx="62" ry="5"/><path d="M78 172C80 182 76 188 70 191H130C124 188 120 182 122 172Z" fill="url(#dyFoot)"/><ellipse cx="100" cy="192" rx="31" ry="5.5" fill="url(#dyFoot)"/><path d="M24 120C26 154 60 176 100 176C140 176 174 154 176 120Z" fill="url(#dyBody)"/><g clip-path="url(#dyClip)"><path class="dy-petal" d="M176 120C176 124.6 175.7 128.9 174.8 131C174 128.9 171.4 129.8 171.4 125.1ZM171.4 125.1C171.4 132.3 168.2 137.2 165.8 140.5C163.4 137.2 158.2 136.8 158.2 129.6ZM158.2 129.6C158.2 138.8 152.5 144 148.9 148.2C145.2 144 138 142.2 138 133ZM138 133C138 143.5 130.5 148.5 126 153.3C121.5 148.5 113.2 145.3 113.2 134.8ZM113.2 134.8C113.2 145.8 104.8 150 100 155C95.2 150 86.8 145.8 86.8 134.8ZM86.8 134.8C86.8 145.3 78.5 148.5 74 153.3C69.5 148.5 62 143.5 62 133ZM62 133C62 142.2 54.8 144 51.1 148.2C47.5 144 41.8 138.8 41.8 129.6ZM41.8 129.6C41.8 136.8 36.6 137.2 34.2 140.5C31.8 137.2 28.6 132.3 28.6 125.1ZM28.6 125.1C28.6 129.8 26 128.9 25.2 131C24.3 128.9 24 124.6 24 120Z"/><path class="dy-line" d="M41.3 159.5A4 4 0 0 0 50.9 164.2A4 4 0 0 0 61.9 167.8A4 4 0 0 0 74 170.4A4 4 0 0 0 86.8 172A4 4 0 0 0 100 172.5A4 4 0 0 0 113.2 172A4 4 0 0 0 126 170.4A4 4 0 0 0 138.1 167.8A4 4 0 0 0 149.1 164.2A4 4 0 0 0 158.7 159.5"/><g class="dy-dot"><circle cx="42.4" cy="150.9" r="1.7"/><circle cx="51.3" cy="155" r="1.7"/><circle cx="61.9" cy="158.3" r="1.7"/><circle cx="73.9" cy="160.6" r="1.7"/><circle cx="86.7" cy="162" r="1.7"/><circle cx="100" cy="162.5" r="1.7"/><circle cx="113.3" cy="162" r="1.7"/><circle cx="126.1" cy="160.6" r="1.7"/><circle cx="138.1" cy="158.3" r="1.7"/><circle cx="148.7" cy="155" r="1.7"/><circle cx="157.6" cy="150.9" r="1.7"/></g></g><path d="M24 120C26 154 60 176 100 176C140 176 174 154 176 120Z" fill="url(#dyDepth)"/><path class="dy-lit" d="M24 120C26 154 60 176 100 176C140 176 174 154 176 120Z" fill="url(#dyWarm)"/><ellipse cx="100" cy="120" rx="76" ry="15" fill="url(#dyRim)"/><ellipse cx="100" cy="119" rx="65" ry="10.5" fill="url(#dyOil)"/><ellipse class="dy-lit" cx="100" cy="119" rx="44" ry="7" fill="url(#dySheen)"/><path class="dy-lit dy-edge" d="M24 120A76 15 0 0 0 176 120"/><path class="dy-wick" d="M97 121C99 117 101 115 100 110"/><g transform="translate(100 112)"><g class="dy-flame"><g class="dy-flick"><path d="M0 2C-15-1-17-22-8-38C-4-46-2-56 1-68C5-55 15-43 16-25C17-8 12 2 0 2Z" fill="url(#dyF1)"/><path d="M0 1C-9-1-10-14-5-24C-2-30-1-37 1-45C4-36 10-28 10-16C10-5 7 1 0 1Z" fill="url(#dyF2)"/><ellipse cx="0" cy="-2" rx="5" ry="3.5" fill="#6d86ff" fill-opacity=".5"/><ellipse cx="0" cy="-8" rx="3.6" ry="8" fill="#fffbea"/></g></g></g></svg></div>
+    <p class="intro-line"><em data-ne="हरेक कथा एउटा प्रश्नबाट सुरु हुन्छ।">Every story begins with a question.</em></p>
+    <p class="intro-hint"><span data-ne="दियो बाल्न स्क्रोल गर्नुहोस्">Scroll to light the diyo</span><i aria-hidden="true"></i></p>
+  </div>
+</section>
+
+<!-- ============ HERO ============ -->
+<section class="hero" data-scrub="exit">
+  <div class="hero-glow" aria-hidden="true"></div>
+
+  <!-- The diyo and its soft light, as the backdrop of the whole hero. -->
+  <div class="hero-backdrop" aria-hidden="true">
+    <div class="hero-light"></div>
+    <div class="diyo" aria-hidden="true"><svg viewBox="0 0 200 210" focusable="false"><circle class="dy-glow" cx="100" cy="82" r="64" fill="url(#dyHalo)"/><ellipse class="dy-shadow" cx="100" cy="197" rx="62" ry="5"/><path d="M78 172C80 182 76 188 70 191H130C124 188 120 182 122 172Z" fill="url(#dyFoot)"/><ellipse cx="100" cy="192" rx="31" ry="5.5" fill="url(#dyFoot)"/><path d="M24 120C26 154 60 176 100 176C140 176 174 154 176 120Z" fill="url(#dyBody)"/><g clip-path="url(#dyClip)"><path class="dy-petal" d="M176 120C176 124.6 175.7 128.9 174.8 131C174 128.9 171.4 129.8 171.4 125.1ZM171.4 125.1C171.4 132.3 168.2 137.2 165.8 140.5C163.4 137.2 158.2 136.8 158.2 129.6ZM158.2 129.6C158.2 138.8 152.5 144 148.9 148.2C145.2 144 138 142.2 138 133ZM138 133C138 143.5 130.5 148.5 126 153.3C121.5 148.5 113.2 145.3 113.2 134.8ZM113.2 134.8C113.2 145.8 104.8 150 100 155C95.2 150 86.8 145.8 86.8 134.8ZM86.8 134.8C86.8 145.3 78.5 148.5 74 153.3C69.5 148.5 62 143.5 62 133ZM62 133C62 142.2 54.8 144 51.1 148.2C47.5 144 41.8 138.8 41.8 129.6ZM41.8 129.6C41.8 136.8 36.6 137.2 34.2 140.5C31.8 137.2 28.6 132.3 28.6 125.1ZM28.6 125.1C28.6 129.8 26 128.9 25.2 131C24.3 128.9 24 124.6 24 120Z"/><path class="dy-line" d="M41.3 159.5A4 4 0 0 0 50.9 164.2A4 4 0 0 0 61.9 167.8A4 4 0 0 0 74 170.4A4 4 0 0 0 86.8 172A4 4 0 0 0 100 172.5A4 4 0 0 0 113.2 172A4 4 0 0 0 126 170.4A4 4 0 0 0 138.1 167.8A4 4 0 0 0 149.1 164.2A4 4 0 0 0 158.7 159.5"/><g class="dy-dot"><circle cx="42.4" cy="150.9" r="1.7"/><circle cx="51.3" cy="155" r="1.7"/><circle cx="61.9" cy="158.3" r="1.7"/><circle cx="73.9" cy="160.6" r="1.7"/><circle cx="86.7" cy="162" r="1.7"/><circle cx="100" cy="162.5" r="1.7"/><circle cx="113.3" cy="162" r="1.7"/><circle cx="126.1" cy="160.6" r="1.7"/><circle cx="138.1" cy="158.3" r="1.7"/><circle cx="148.7" cy="155" r="1.7"/><circle cx="157.6" cy="150.9" r="1.7"/></g></g><path d="M24 120C26 154 60 176 100 176C140 176 174 154 176 120Z" fill="url(#dyDepth)"/><path class="dy-lit" d="M24 120C26 154 60 176 100 176C140 176 174 154 176 120Z" fill="url(#dyWarm)"/><ellipse cx="100" cy="120" rx="76" ry="15" fill="url(#dyRim)"/><ellipse cx="100" cy="119" rx="65" ry="10.5" fill="url(#dyOil)"/><ellipse class="dy-lit" cx="100" cy="119" rx="44" ry="7" fill="url(#dySheen)"/><path class="dy-lit dy-edge" d="M24 120A76 15 0 0 0 176 120"/><path class="dy-wick" d="M97 121C99 117 101 115 100 110"/><g transform="translate(100 112)"><g class="dy-flame"><g class="dy-flick"><path d="M0 2C-15-1-17-22-8-38C-4-46-2-56 1-68C5-55 15-43 16-25C17-8 12 2 0 2Z" fill="url(#dyF1)"/><path d="M0 1C-9-1-10-14-5-24C-2-30-1-37 1-45C4-36 10-28 10-16C10-5 7 1 0 1Z" fill="url(#dyF2)"/><ellipse cx="0" cy="-2" rx="5" ry="3.5" fill="#6d86ff" fill-opacity=".5"/><ellipse cx="0" cy="-8" rx="3.6" ry="8" fill="#fffbea"/></g></g></g></svg></div>
+    <div class="petals"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+  <canvas class="embers" id="embers" aria-hidden="true"></canvas>
+
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <h1 class="hero-title brand-title" lang="ne">
+        <span class="line"><span>खुल्दुली</span></span>
+      </h1>
+      <p class="hero-log reveal" data-ne="नेपाली कथा भन्ने स्टुडियो। नेपालका मिथक, परम्परा, चाडपर्व र घरका कथाबाट हामी सिनेम्याटिक छोटा फिल्म र लामा डकुमेन्ट्री बनाउँछौँ।">
+        A Nepali storytelling studio. We turn the myths, traditions, festivals and family stories of Nepal into cinematic short films and long documentaries.
+      </p>
+
+      <div class="hero-cta reveal">
+        <a class="btn btn-fill" href="#shorts">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+          <span data-ne="हाम्रा फिल्म हेर्नुहोस्">Watch our films</span>
+        </a>
+        <a class="btn" href="#contact" data-ne="हामीसँग काम गर्नुहोस्">Work with us</a>
+      </div>
+    </div>
+
+    <!-- Latest film. Set which one with `latest: true` in js/config.js. -->
+    <div class="hero-latest">
+      <p class="latest-tag"><span class="dot"></span><span data-ne="भर्खरको फिल्म">Latest film</span></p>
+      <a class="hero-poster tilt" id="leadPoster" href="#" target="_blank" rel="noopener" aria-label="Watch the latest film" data-open-reels="0" data-pv="lead">
+        <div class="pv"></div>
+        <div class="poster-type">
+          <span class="p-top" data-ne="खुल्दुली प्रस्तुति">खुल्दुली presents</span>
+          <span class="p-title" id="leadTitle"></span>
+          <span class="p-sub" id="leadSub"></span>
+        </div>
+        <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
+        <span class="poster-badge" id="leadBadge"></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REACH ============ -->
+<!-- Views and reach: a full screen straight after the landing. Numbers come from js/config.js. -->
+<section class="section reach" id="reach">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <span class="sec-no">01</span>
+      <h2><span lang="ne">भ्युज र पहुँच</span><em>Views and reach, 2026</em></h2>
+    </header>
+
+    <div class="big reveal">
+      <div class="big-num"><span class="count" id="headline" data-to="22" data-dec="0">22</span><span id="headlineSuffix">M+</span></div>
+      <p data-ne="यो वर्ष चार प्लेटफर्ममा भ्युज">views across four platforms this year</p>
+    </div>
+
+    <div class="cards" id="reachCards"></div>
+    <p class="note" id="statsNote"></p>
+  </div>
+</section>
+
+<!-- ============ SHORT FILMS ============ -->
+<section class="section shorts" id="shorts">
+  <div class="hscroll" id="hscroll" data-pin>
+    <div class="hs-sticky">
+      <div class="wrap hs-head">
+        <header class="sec-head reveal">
+          <span class="sec-no">02</span>
+          <h2><span lang="ne">छोटा फिल्म</span><em>Short films</em></h2>
+          <p data-ne="Facebook, Instagram र TikTok का लागि कथामा आधारित फिल्म।">Story driven films for Facebook, Instagram and TikTok.</p>
+        </header>
+        <button class="btn btn-fill reel-enter" type="button" data-open-reels="0">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+          <span data-ne="रिल मोडमा हेर्नुहोस्">Watch in reel mode</span>
+          <b id="reelsBtnCount"></b>
+        </button>
+      </div>
+      <div class="rail" id="shortsRail" aria-label="Short films"></div>
+      <div class="wrap hs-foot">
+        <p class="rail-hint" data-ne="स्क्रोल गर्दै जानुहोस्, थिचेर आवाजसहित हेर्नुहोस्">Keep scrolling, tap a film for sound</p>
+        <div class="hs-bar" aria-hidden="true"><i></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LONG FORM ============ -->
+<section class="section longform" id="longform">
+  <div class="lf-grid" aria-hidden="true"></div>
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <span class="sec-no mono">03 / LONG FORM</span>
+      <h2><span lang="ne">लामा डकुमेन्ट्री</span><em>Cinematic documentaries</em></h2>
+      <p data-ne="YouTube का लागि सिनेम्याटिक डकुमेन्ट्री। 3D, 2.5D र 2D एनिमेसनबाट बनेका: पुनर्निर्माण गरिएका संसार, एनिमेटेड नक्सा र जीवन्त बनाइएका अभिलेख सामग्री।">
+        Cinematic documentaries for YouTube, built with 3D, 2.5D and 2D animation: rebuilt worlds, animated maps and archival material brought to life.
+      </p>
+    </header>
+
+  </div>
+
+  <div class="craft" id="craft" data-pin data-step="0">
+    <div class="craft-sticky">
+      <div class="craft-stage" aria-hidden="true">
+        <div class="scene scene-3d">
+          <div class="pagoda-spin"><div class="pagoda" id="pagoda"></div></div>
+        </div>
+        <div class="scene scene-25d">
+          <div class="plate"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
+        </div>
+        <div class="scene scene-2d">
+          <svg viewBox="0 0 600 360">
+            <g class="graticule"><path d="M0 60H600M0 120H600M0 180H600M0 240H600M0 300H600M100 0V360M200 0V360M300 0V360M400 0V360M500 0V360"/></g>
+            <path class="land" d="M40 122 L108 72 L186 96 L258 122 L330 150 L402 172 L472 190 L560 214 L572 268 L502 292 L420 276 L340 266 L262 236 L180 206 L100 182 L50 160 Z"/>
+            <path class="contour" d="M92 128 L170 122 L250 150 L330 176 L410 196 L500 216"/>
+            <path class="contour" d="M110 150 L182 160 L262 190 L340 214 L420 232 L520 252"/>
+            <path class="route" pathLength="1" d="M352 226 C 330 208, 300 204, 282 190 S 252 162, 244 138"/>
+            <path class="route route-b" pathLength="1" d="M352 226 C 380 232, 410 222, 456 214"/>
+            <g class="place p0"><circle cx="352" cy="226" r="6"/><text x="352" y="252" text-anchor="middle">KATHMANDU</text></g>
+            <g class="place p1"><circle cx="244" cy="138" r="6"/><text x="244" y="122" text-anchor="middle">MUSTANG</text></g>
+            <g class="place p2"><circle cx="456" cy="214" r="6"/><text x="468" y="200">KHUMBU</text></g>
+          </svg>
+        </div>
+      </div>
+
+      <div class="craft-copy">
+        <span class="craft-kicker mono" data-ne="हामी कसरी बनाउँछौँ">How the documentaries are built</span>
+        <div class="craft-steps">
+          <div class="craft-step" data-i="0">
+            <b>3D</b>
+            <h3 data-ne="पुनर्निर्माण गरिएका संसार">Rebuilt worlds</h3>
+            <p data-ne="अब नरहेका वा क्यामेरा पुग्न नसक्ने ठाउँहरू तीन आयाममा फेरि बनाइन्छन्, ताकि कथा तिनैभित्र हिँड्न सकोस्।">Places that no longer exist, or that no camera can reach, rebuilt in three dimensions so the story can walk through them.</p>
+          </div>
+          <div class="craft-step" data-i="1">
+            <b>2.5D</b>
+            <h3 data-ne="जीवन्त बनाइएका अभिलेख">Archive brought to life</h3>
+            <p data-ne="पुराना तस्बिर र चित्रलाई तहतहमा काटेर गहिराइ दिइन्छ, ताकि स्थिर तस्बिर पनि दृश्य जस्तै चलोस्।">Old photographs and paintings cut into layers and given depth, so a still image moves like a shot.</p>
+          </div>
+          <div class="craft-step" data-i="2">
+            <b>2D</b>
+            <h3 data-ne="एनिमेटेड नक्सा">Animated maps</h3>
+            <p data-ne="बाटो, सिमाना र समयरेखा पर्दामै कोरिन्छन्, ताकि दर्शकलाई कथा कहाँ छ भन्ने सधैँ थाहा होस्।">Routes, borders and timelines drawn on screen, so the viewer always knows where the story is.</p>
+          </div>
+        </div>
+        <div class="craft-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="lf-list" id="longList"></div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="section about" id="about">
+  <div class="wrap about-grid">
+    <header class="sec-head reveal">
+      <span class="sec-no">04</span>
+      <h2><span lang="ne">हाम्रो बारेमा</span><em>About</em></h2>
+    </header>
+    <div class="about-body">
+      <p class="lede reveal" data-scrub="words" data-ne="खुल्दुली नेपाली कथा भन्छ: मिथक, परम्परा, चाडपर्व र हरेक नेपाली सुन्दै हुर्केका घरका कथा। यी कथा सिनेम्याटिक छोटा फिल्म र लामा डकुमेन्ट्रीका रूपमा बन्छन्।">
+        खुल्दुली tells Nepali stories: myths, traditions, festivals and the family stories every Nepali grew up with, made as cinematic short films and long documentaries.
+      </p>
+      <div class="two reveal">
+        <div>
+          <h3><span lang="ne">छोटा फिल्म</span> <em>Short films</em></h3>
+          <p data-ne="Facebook, Instagram र TikTok का लागि कथामा आधारित फिल्म।">Story driven films for Facebook, Instagram and TikTok.</p>
+        </div>
+        <div>
+          <h3><span lang="ne">लामा डकुमेन्ट्री</span> <em>Long form</em></h3>
+          <p data-ne="YouTube का लागि 3D, 2.5D र 2D एनिमेसनबाट बनेका सिनेम्याटिक डकुमेन्ट्री।">Cinematic documentaries for YouTube, built with 3D, 2.5D and 2D animation.</p>
+        </div>
+      </div>
+      <p class="reveal" data-ne="हाम्रा दर्शक नेपालमा र खाडी, मलेसिया, जापान लगायत संसारभरका नेपालीमाझ छन्। तीमध्ये झन्डै सबै हामीलाई फलो नगर्ने मानिस हुन्, किनभने यी फिल्म आफैँ फैलिन्छन्।">
+        Our audience is in Nepal and across the Nepali diaspora in the Gulf, Malaysia, Japan and beyond. Almost all of it comes from people who do not follow us yet, because the films travel on their own.
+      </p>
+      <ul class="places reveal" aria-label="Where the audience is">
+        <li data-ne="नेपाल">Nepal</li><li data-ne="खाडी">The Gulf</li><li data-ne="मलेसिया">Malaysia</li><li data-ne="जापान">Japan</li><li data-ne="र अझ टाढा">and beyond</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="section services" id="services">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <span class="sec-no">05</span>
+      <h2><span lang="ne">सेवा</span><em>Services</em></h2>
+    </header>
+
+    <div class="svc-grid">
+      <article class="svc spot reveal">
+        <span class="svc-no">01</span>
+        <h3><span lang="ne">प्रायोजित कथा</span><em>Sponsored stories</em></h3>
+        <p data-ne="ब्रान्डको सन्देश खुल्दुलीको फिल्मभित्र बुनिन्छ र हाम्रै पेजमा प्रकाशित हुन्छ। लेबल देखिन्छ, तर कहिल्यै विज्ञापन जस्तो लाग्दैन।">
+          A brand's message woven into a खुल्दुली film, published on our pages. Shows a label, never reads as an ad.
+        </p>
+        <a class="btn btn-quote" href="#contact" data-service="Sponsored stories"><span data-ne="कोटेसन लिनुहोस्">Get a quote</span><i>→</i></a>
+      </article>
+
+      <article class="svc spot reveal">
+        <span class="svc-no">02</span>
+        <h3><span lang="ne">ब्रान्ड फिल्म</span><em>Brand films</em></h3>
+        <p data-ne="व्यवसायका लागि सिनेम्याटिक छोटा फिल्म: होटल, रेस्टुरेन्ट, पर्यटन, उत्पादन।">
+          Cinematic short films for businesses: hotels, restaurants, tourism, products.
+        </p>
+        <a class="btn btn-quote" href="#contact" data-service="Brand films"><span data-ne="कोटेसन लिनुहोस्">Get a quote</span><i>→</i></a>
+      </article>
+
+      <article class="svc spot reveal">
+        <span class="svc-no">03</span>
+        <h3><span lang="ne">AI भिडियो निर्माण</span><em>AI video production</em></h3>
+        <ul class="tiers">
+          <li><b data-ne="स्ट्यान्डर्ड">Standard</b><span data-ne="छिटो, किफायती, सामाजिक सञ्जालका लागि उपयुक्त।">Fast, affordable, good for social media.</span></li>
+          <li class="prem"><b data-ne="प्रिमियम">Premium</b><span data-ne="उच्चतम भिजुअल गुणस्तर, प्रति प्रोजेक्ट मूल्य।">Top visual quality, priced per project.</span></li>
+        </ul>
+        <a class="btn btn-quote" href="#contact" data-service="AI video production"><span data-ne="कोटेसन लिनुहोस्">Get a quote</span><i>→</i></a>
+      </article>
+
+      <article class="svc spot reveal">
+        <span class="svc-no">04</span>
+        <h3><span lang="ne">सिनेम्याटिक डकुमेन्ट्री</span><em>Cinematic documentaries</em></h3>
+        <p data-ne="अनुसन्धानमा आधारित लामा फिल्म, 3D, 2.5D र 2D एनिमेसनबाट बनेका। ब्रान्ड, संस्था र हाम्रै YouTube च्यानलका लागि।">
+          Researched long form films made with 3D, 2.5D and 2D animation, for brands, institutions and our own YouTube channel.
+        </p>
+        <a class="btn btn-quote" href="#contact" data-service="Cinematic documentaries"><span data-ne="कोटेसन लिनुहोस्">Get a quote</span><i>→</i></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="section contact" id="contact">
+  <div class="contact-glow" aria-hidden="true"></div>
+  <div class="wrap contact-grid">
+    <div>
+      <header class="sec-head reveal">
+        <span class="sec-no">06</span>
+        <h2><span lang="ne">सम्पर्क</span><em>Contact</em></h2>
+        <p data-ne="तपाईंको कथा के हो? हामीलाई भन्नुहोस्।">What is your story? Tell us.</p>
+      </header>
+
+      <div class="mail reveal" data-scrub>
+        <a class="mail-link js-email" href="#"></a>
+        <button class="copy" id="copy" type="button"><span data-ne="कपी गर्नुहोस्">Copy</span></button>
+      </div>
+
+      <ul class="social reveal" id="social" aria-label="Social links"></ul>
+    </div>
+
+    <form class="form reveal" id="form" novalidate>
+      <label><span data-ne="नाम">Name</span><input name="name" autocomplete="name" required></label>
+      <label><span data-ne="ब्रान्ड वा संस्था">Brand or organisation</span><input name="brand" autocomplete="organization"></label>
+      <label><span data-ne="सेवा">Service</span>
+        <select name="service" id="serviceSelect">
+          <option>Sponsored stories</option>
+          <option>Brand films</option>
+          <option>AI video production</option>
+          <option>Cinematic documentaries</option>
+          <option>Something else</option>
+        </select>
+      </label>
+      <label><span data-ne="सन्देश">Message</span><textarea name="message" rows="4" required></textarea></label>
+      <button class="btn btn-fill" type="submit"><span data-ne="इमेल पठाउनुहोस्">Send by email</span></button>
+      <p class="form-note" data-ne="यसले तपाईंको इमेल एप खोल्छ।">This opens your email app with the message ready.</p>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot" data-scrub>
+  <div class="foot-giant" aria-hidden="true"><span lang="ne">खुल्दुली</span></div>
+  <div class="wrap foot-in">
+    <span class="foot-brand" lang="ne">खुल्दुली</span>
+    <em>Every story begins with a question.</em>
+    <span class="foot-copy">© 2026 खुल्दुली · khuldulinp.com</span>
+  </div>
+</footer>
+
+<!-- ============ PLAYER ============ -->
+<div class="player" id="player" hidden>
+  <button class="player-close" id="playerClose" type="button" aria-label="Close">✕</button>
+  <div class="player-frame" id="playerFrame"></div>
+</div>
+
+<!-- ============ REEL MODE ============ -->
+<div class="reels" id="reels" hidden role="dialog" aria-label="Reels">
+  <div class="reels-top">
+    <span class="reels-brand" lang="ne">खुल्दुली</span>
+    <span class="reels-count mono" id="reelsCount">01 / 01</span>
+    <button class="reels-btn" id="reelsClose" type="button" aria-label="Close">✕</button>
+  </div>
+  <div class="reels-phone">
+    <div class="reels-track" id="reelsTrack"></div>
+    <button class="reels-btn reels-sound" id="reelsSound" type="button" aria-pressed="false" aria-label="Sound">
+      <svg class="s-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16 9l5 6M21 9l-5 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <svg class="s-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16 8.5a5 5 0 010 7M18.5 6a8.5 8.5 0 010 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <p class="reels-tap"><span data-ne="आवाजका लागि थिच्नुहोस्">Tap for sound</span></p>
+  </div>
+  <div class="reels-nav">
+    <button class="reels-btn" id="reelsPrev" type="button" aria-label="Previous reel">↑</button>
+    <button class="reels-btn" id="reelsNext" type="button" aria-label="Next reel">↓</button>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
