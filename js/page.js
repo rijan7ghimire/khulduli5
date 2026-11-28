@@ -2,11 +2,14 @@
    Shared script for the plain pages (privacy.html, terms.html, 404.html).
    The theme and language switches work as on the home page and use the
    same saved choices, so a visitor keeps them from page to page.
-   English is in the tag, Nepali in data-ne. The email comes from js/config.js.
+   English is in the tag, Nepali in data-ne. The email comes from js/config.js,
+   or from the backend's copy of the content when one is set (js/backend.js).
 ------------------------------------------------------------------- */
 (function () {
   "use strict";
-  var C = window.KHULDULI || {};
+  var KB = window.KHULDULI_BACKEND || null;
+  var BASE = window.KHULDULI || {};
+  var C = KB && BASE.shorts ? KB.initial(BASE) : BASE;
   var root = document.documentElement;
   var $ = function (s, el) { return (el || document).querySelector(s); };
   var $$ = function (s, el) { return Array.prototype.slice.call((el || document).querySelectorAll(s)); };
@@ -58,4 +61,14 @@
     try { localStorage.setItem("khulduli-theme", t); } catch (e) {}
     applyTheme(t);
   });
+
+  /* ---------- backend: a page view, quote buttons, and the current email ---------- */
+  if (KB) {
+    KB.track("page_view");
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest ? e.target.closest('a[href$="#contact"]') : null;
+      if (a) KB.track("quote_click", { detail: a.closest(".nav") ? "nav" : "page" });
+    });
+    if (BASE.shorts) KB.refresh(BASE, function (fresh) { C = fresh; fillEmail(); });
+  }
 })();

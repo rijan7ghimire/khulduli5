@@ -349,8 +349,9 @@
     </div>
 
     <form class="form reveal" id="form" novalidate>
-      <label><span data-ne="नाम">Name</span><input name="name" autocomplete="name" required></label>
-      <label><span data-ne="ब्रान्ड वा संस्था">Brand or organisation</span><input name="brand" autocomplete="organization"></label>
+      <label><span data-ne="नाम">Name</span><input name="name" autocomplete="name" maxlength="120" required></label>
+      <label><span data-ne="इमेल">Email</span><input name="email" type="email" inputmode="email" autocomplete="email" maxlength="254"></label>
+      <label><span data-ne="ब्रान्ड वा संस्था">Brand or organisation</span><input name="brand" autocomplete="organization" maxlength="160"></label>
       <label><span data-ne="सेवा">Service</span>
         <select name="service" id="serviceSelect">
           <option>Sponsored stories</option>
@@ -360,9 +361,12 @@
           <option>Something else</option>
         </select>
       </label>
-      <label><span data-ne="सन्देश">Message</span><textarea name="message" rows="4" required></textarea></label>
-      <button class="btn btn-fill" type="submit"><span data-ne="इमेल पठाउनुहोस्">Send by email</span></button>
-      <p class="form-note" data-ne="यसले तपाईंको इमेल एप खोल्छ।">This opens your email app with the message ready.</p>
+      <label><span data-ne="सन्देश">Message</span><textarea name="message" rows="4" maxlength="5000" required></textarea></label>
+      <!-- Left empty by people, filled by bots. Hidden from view and from screen readers. -->
+      <div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
+      <button class="btn btn-fill" type="submit" id="formSend"><span data-ne="इमेल पठाउनुहोस्">Send by email</span></button>
+      <p class="form-note" id="formNote" data-ne="यसले तपाईंको इमेल एप खोल्छ।">This opens your email app with the message ready.</p>
+      <p class="form-status" id="formStatus" role="status" aria-live="polite" hidden></p>
     </form>
   </div>
 </section>
@@ -410,6 +414,7 @@
 </div>
 
 <script src="js/config.js"></script>
+<script src="js/backend.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

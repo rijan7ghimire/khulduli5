@@ -1,6 +1,9 @@
 (function () {
   "use strict";
-  var C = window.KHULDULI;
+  // Content: js/config.js, overlaid with the copy from the backend when one is set (js/backend.js).
+  var KB = window.KHULDULI_BACKEND || null;
+  var BASE = window.KHULDULI;
+  var C = KB ? KB.initial(BASE) : BASE;
   var root = document.documentElement;
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var $ = function (s, el) { return (el || document).querySelector(s); };
@@ -34,14 +37,15 @@
   function playable(f) { return !!(f.video || f.yt || f.tiktok); }
   function posterOf(f) { return f.poster || (f.yt ? "https://i.ytimg.com/vi/" + f.yt + "/oar2.jpg" : ""); }
   var TONES = [["#ff7a1a", "#5a1206"], ["#3f7cff", "#0a1436"], ["#19c3a6", "#04201f"], ["#e5484d", "#2a0508"], ["#b98cff", "#1b0d33"]];
-  var feed = C.shorts.concat(C.moreReels || []);
-  var reelFeed = feed.filter(playable);
+  var feed, reelFeed;
+  function setFeeds() { feed = C.shorts.concat(C.moreReels || []); reelFeed = feed.filter(playable); }
+  setFeeds();
 
   function renderShorts() {
     var T = [-0.5, 0.4, -0.3, 0.55, -0.4, 0.3, -0.55, 0.4, -0.3, 0.5];
     $("#shortsRail").innerHTML = feed.map(function (f, i) {
       var tone = f.tone || TONES[i % TONES.length], p = posterOf(f), ri = reelFeed.indexOf(f), t0 = T[i % T.length];
-      return '<a class="card tilt" style="--t0:' + t0 + ";--l0:" + Math.abs(t0) + ";--c1:" + tone[0] + ";--c2:" + tone[1] + '" href="' + esc(f.link) + '" target="_blank" rel="noopener"' + (ri > -1 ? ' data-reel="' + ri + '"' : "") + ">" +
+      return '<a class="card tilt" style="--t0:' + t0 + ";--l0:" + Math.abs(t0) + ";--c1:" + tone[0] + ";--c2:" + tone[1] + '" href="' + esc(f.link) + '" target="_blank" rel="noopener"' + (ri > -1 ? ' data-reel="' + ri + '"' : "") + ' data-f="' + i + '">' +
         '<span class="card-no" aria-hidden="true">' + ("0" + (i + 1)).slice(-2) + "</span>" +
         '<div class="card-poster' + (p ? " has-img" : "") + '" data-glyph="' + esc(ttl(f).charAt(0)) + '"' + (ri > -1 ? ' data-pv="' + i + '"' : "") + ">" +
         posterImg(p, ttl(f)) + '<div class="pv"></div>' +
@@ -82,14 +86,40 @@
     }).join("");
     $("#statsNote").textContent = tr(C.statsNote);
     $("#headline").dataset.to = C.headline.value;
+    $("#headline").dataset.dec = C.headline.decimals || 0;
     $("#headlineSuffix").textContent = C.headline.suffix;
   }
 
   function renderContact() {
     $$(".js-email").forEach(function (a) { a.textContent = C.email; a.href = "mailto:" + C.email; });
-    $("#social").innerHTML = Object.keys(C.socials).map(function (k) {
+    $("#social").innerHTML = Object.keys(C.socials).filter(function (k) { return ICONS[k] && C.socials[k]; }).map(function (k) {
       return '<li><a href="' + esc(C.socials[k]) + '" target="_blank" rel="noopener">' + ICONS[k] + "<span>" + NAMES[k] + "</span></a></li>";
     }).join("");
+  }
+
+  // Text in both languages on one element. applyLang() switches it with the rest of the page.
+  function say(el, en, ne) {
+    el.dataset.en = en; el.dataset.ne = ne;
+    el.innerHTML = lang === "ne" ? ne : en;
+  }
+  // With a backend the form sends the message itself; without one it opens the email app, as before.
+  var direct = !!(KB && KB.configured);
+  function formMode() {
+    if (!direct) return;
+    say($("#formSend span"), "Send message", "सन्देश पठाउनुहोस्");
+    say($("#formNote"), 'Your message comes straight to us, and we reply by email. See the <a href="privacy.html">privacy policy</a>.',
+      'तपाईंको सन्देश सिधै हामीकहाँ आउँछ, र हामी इमेलबाट जवाफ दिन्छौँ। <a href="privacy.html">गोपनीयता नीति</a> हेर्नुहोस्।');
+    $("#form").email.required = true;
+  }
+
+  // Visit statistics (js/backend.js). Each film counts once per page view.
+  var playedSet = {};
+  function played(f, how) {
+    if (!KB || !f) return;
+    var id = KB.filmId(f);
+    if (!id || playedSet[id]) return;
+    playedSet[id] = 1;
+    KB.track("film_play", { film: f, detail: how });
   }
 
   // The film in the frame at the top: the one flagged `latest` in the config.
@@ -101,8 +131,12 @@
     $("#leadTitle").textContent = ttl(L);
     $("#leadSub").textContent = lang === "ne" ? "" : (L.en || "");
     $("#leadBadge").textContent = L.platform || "Reel";
-    if (img && !$("img.poster-img", p)) p.insertAdjacentHTML("afterbegin", posterImg(img, ttl(L), "poster-img"));
+    var old = $("img.poster-img", p);
+    if (old && old.getAttribute("src") !== img) { p.removeChild(old); old = null; }
+    if (img && !old) p.insertAdjacentHTML("afterbegin", posterImg(img, ttl(L), "poster-img"));
   }
+
+  function renderContent() { renderLead(); renderContact(); renderShorts(); renderLong(); renderReach(); }
 
   /* ---------- theme: dark by default, light on request, remembered ----------
      The <head> script sets data-theme before the styles load, so there is no flash. */
@@ -221,7 +255,9 @@
     rail.addEventListener("click", function (e) {
       if (moved > 6) { e.preventDefault(); e.stopPropagation(); return; }
       var card = e.target.closest ? e.target.closest(".card[data-reel]") : null;
-      if (card) { e.preventDefault(); openReels(parseInt(card.dataset.reel, 10)); }
+      if (card) { e.preventDefault(); openReels(parseInt(card.dataset.reel, 10)); return; }
+      var other = e.target.closest ? e.target.closest(".card[data-f]") : null;
+      if (other) played(feed[parseInt(other.dataset.f, 10)], "link");
     }, true);
     rail.addEventListener("dragstart", function (e) { e.preventDefault(); });
   })();
@@ -338,6 +374,7 @@
   document.addEventListener("click", function (e) {
     var b = e.target.closest ? e.target.closest("[data-fs]") : null; if (!b) return;
     var i = parseInt(b.dataset.fs, 10), f = C.longform[i], scr = $$(".lf-screen")[i];
+    played(f, "full screen");
     if (!canEmbed) { window.open(f.link, "_blank", "noopener"); return; }
     pvStart(scr);
     var fr = $(".pv iframe", scr);
@@ -359,6 +396,7 @@
   function activate(i) {
     if (i === reelNow || reels.hidden) return;
     reelNow = i;
+    played(reelFeed[i], "reel");
     $$(".reel", track).forEach(function (el) {
       var on = parseInt(el.dataset.i, 10) === i;
       el.classList.toggle("on", on);
@@ -392,6 +430,7 @@
     // Players from YouTube and TikTok refuse to run on file:// pages.
     if (location.protocol === "file:" && !reelFeed[i].video) { window.open(reelFeed[i].link, "_blank", "noopener"); return; }
     buildReels();
+    if (KB) KB.track("reel_open", { film: reelFeed[i || 0] });
     pvPauseAll(true);
     reels.hidden = false; document.body.style.overflow = "hidden";
     reelNow = -1; goReel(i || 0, false); activate(i || 0);
@@ -433,13 +472,48 @@
   $$("[data-service]").forEach(function (a) {
     a.addEventListener("click", function () { $("#serviceSelect").value = a.dataset.service; });
   });
+  // Quote buttons, for the visit statistics: which one was pressed.
+  document.addEventListener("click", function (e) {
+    var a = KB && e.target.closest ? e.target.closest('a[href="#contact"]') : null;
+    if (a) KB.track("quote_click", { detail: a.dataset.service || (a.closest(".nav") ? "nav" : "hero") });
+  });
+
+  var statusEl = $("#formStatus"), sending = false;
+  function formStatus(kind, en, ne) {
+    statusEl.hidden = !kind;
+    statusEl.className = "form-status" + (kind ? " is-" + kind : "");
+    if (kind) say(statusEl, en, ne);
+  }
+  function mailto(f) {
+    var subject = "Quote request: " + f.service.value + (f.brand.value ? " (" + f.brand.value + ")" : "");
+    var body = f.message.value + "\n\n" + f.name.value + (f.brand.value ? "\n" + f.brand.value : "") + (f.email.value.trim() ? "\n" + f.email.value.trim() : "");
+    location.href = "mailto:" + C.email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+  }
   $("#form").addEventListener("submit", function (e) {
     e.preventDefault();
     var f = e.target;
+    if (sending) return;
     if (!f.name.value.trim() || !f.message.value.trim()) { (f.name.value.trim() ? f.message : f.name).focus(); return; }
-    var subject = "Quote request: " + f.service.value + (f.brand.value ? " (" + f.brand.value + ")" : "");
-    var body = f.message.value + "\n\n" + f.name.value + (f.brand.value ? "\n" + f.brand.value : "");
-    location.href = "mailto:" + C.email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    if (!direct) { mailto(f); return; }
+    var mail = f.email.value.trim();
+    if (!KB.rules.email.test(mail) || mail.length > 254) {
+      formStatus("err", "Please add an email address we can reply to.", "जवाफ दिन मिल्ने इमेल ठेगाना लेख्नुहोस्।");
+      f.email.focus(); return;
+    }
+    // A filled hidden field means a bot, or an autofill gone wrong: nothing is stored, the email app opens instead.
+    if (f.website.value) { mailto(f); return; }
+    sending = true;
+    var btn = $("#formSend"); btn.disabled = true;
+    formStatus("wait", "Sending", "पठाउँदै");
+    KB.sendMessage({ name: f.name.value, email: mail, brand: f.brand.value, service: f.service.value, message: f.message.value, lang: lang })
+      .then(function () {
+        formStatus("ok", "Thank you. Your message has reached us, and we will reply by email.", "धन्यवाद। तपाईंको सन्देश हामीकहाँ आइपुग्यो। हामी इमेलबाट जवाफ दिनेछौँ।");
+        f.name.value = ""; f.email.value = ""; f.brand.value = ""; f.message.value = "";
+      }, function () {
+        formStatus("err", "The message could not be sent from here, so your email app is opening with it ready.", "सन्देश यहाँबाट पठाउन सकिएन, त्यसैले तपाईंको इमेल एप सन्देश तयार अवस्थामा खुल्दैछ।");
+        mailto(f);
+      })
+      .then(function () { sending = false; btn.disabled = false; });
   });
 
   /* ---------- embers ---------- */
@@ -574,7 +648,10 @@
 
   /* ---------- boot ---------- */
   try { var saved = localStorage.getItem("khulduli-lang"); if (saved === "ne" || saved === "en") lang = saved; } catch (e) {}
-  renderLead(); renderContact(); applyLang(); renderShorts(); renderLong(); renderReach();
+  formMode();
+  // If the backend's copy cannot be drawn for any reason, js/config.js is drawn instead.
+  try { renderContent(); } catch (err) { if (C === BASE) throw err; C = BASE; setFeeds(); renderContent(); }
+  applyLang();
   bindDynamic(false);
   scrubSetup();
   onScroll();
@@ -586,4 +663,25 @@
     try { localStorage.setItem("khulduli-theme", t); } catch (e) {}
     applyTheme(t);
   });
+
+  /* ---------- backend: statistics and the current content ----------
+     The page is already drawn from js/config.js (or the copy fetched on the last visit).
+     The current copy is swapped in only while nothing drawn from it is on screen, that is
+     while the visitor is still on the diyo intro, so nothing visibly changes or jumps.
+     Arriving later, it is kept for the next page view instead. */
+  if (KB) {
+    if (KB.isPreview()) document.body.insertAdjacentHTML("beforeend", '<p class="preview-badge">Preview of unsaved changes</p>');
+    KB.track("page_view");
+    KB.refresh(BASE, function (fresh) {
+      if (KB.same(fresh, C)) return;
+      var hero = $(".hero");
+      if (!hero || hero.getBoundingClientRect().top < window.innerHeight || !reels.hidden || !player.hidden) return;
+      var prev = C;
+      try { C = fresh; setFeeds(); renderContent(); }
+      catch (err) { C = prev; setFeeds(); renderContent(); return; }
+      bindDynamic(false);
+      scrubSetup();
+      var rc = $("#reelsBtnCount"); if (rc) rc.textContent = reelFeed.length;
+    });
+  }
 })();

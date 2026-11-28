@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Owner only. Not linked from any page, not in the sitemap, blocked in robots.txt. See ADMIN.md. -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="same-origin">
+<!-- Only this site's own files may run here, and the page may only talk to this site and the backend.
+     The hash allows the one-line theme script below; change it if that script changes (ADMIN.md, "For developers"). -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-MwXU18bLIoWHoIrEtBs8P5PY1s/Cp5fkX8YoTxD9o14='; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; font-src 'self'; connect-src 'self' https://*.supabase.co; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'self'">
+<title>Admin · खुल्दुली</title>
+<meta name="theme-color" content="#070504">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<script>try{if(localStorage.getItem("khulduli-theme")==="light"){document.documentElement.setAttribute("data-theme","light");document.querySelector('meta[name="theme-color"]').setAttribute("content","#f4ede1");}}catch(e){}</script>
+<link rel="preload" href="/assets/fonts/anek-devanagari-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/styles.css">
+<link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body class="adm-body">
+
+<header class="nav scrolled adm-nav" id="nav">
+  <a class="brand" href="/admin/" aria-label="खुल्दुली admin">
+    <span class="mark" aria-hidden="true">खु<svg viewBox="0 0 24 24"><g stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 20 9 15"/><path d="M12 3v7"/><path d="M3 11h6"/><path d="M17 5l-3 5"/><path d="M21 12h-5"/></g></svg></span>
+    <span class="brand-name">खुल्दुली</span>
+    <span class="adm-tag">Admin</span>
+  </a>
+  <div class="nav-right">
+    <button class="theme" id="theme" type="button" aria-pressed="false" title="Light theme">
+      <svg class="t-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <svg class="t-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      <span class="sr">Light theme</span>
+    </button>
+    <button class="btn btn-sm" id="signOut" type="button" hidden>Sign out</button>
+  </div>
+</header>
+
+<main class="adm" id="main">
+
+  <!-- Shown while js/backend.js still has its placeholders. -->
+  <section class="adm-card adm-narrow" id="setup" hidden>
+    <h1>Admin</h1>
+    <p>The backend is not set up yet, so there is nothing to sign in to. Follow <b>ADMIN.md</b> in the repository: create the project, run <code>supabase/schema.sql</code>, then put the project URL and the public key in <code>js/backend.js</code>.</p>
+    <p>Until then the site keeps working from <code>js/config.js</code>, and the contact form opens the visitor's email app.</p>
+  </section>
+
+  <section class="adm-card adm-narrow" id="login" hidden>
+    <h1>Sign in</h1>
+    <form class="adm-form" id="loginForm" novalidate>
+      <div class="adm-field"><label for="loginEmail">Email</label><input id="loginEmail" name="email" type="email" inputmode="email" autocomplete="username" required></div>
+      <div class="adm-field"><label for="loginPassword">Password</label><input id="loginPassword" name="password" type="password" autocomplete="current-password" required></div>
+      <button class="btn btn-fill" type="submit" id="loginBtn">Sign in</button>
+      <p class="adm-alert" id="loginMsg" role="alert" hidden></p>
+    </form>
+  </section>
+
+  <section class="adm-card adm-narrow" id="denied" hidden>
+    <h1>No access</h1>
+    <p id="deniedText"></p>
+    <button class="btn" type="button" id="deniedOut">Sign out</button>
+  </section>
+
+  <section id="app" hidden>
+    <div class="adm-tabs" role="tablist" aria-label="Admin">
+      <button class="adm-tab" role="tab" type="button" id="t-content" aria-controls="p-content" aria-selected="true">Content</button>
+      <button class="adm-tab" role="tab" type="button" id="t-messages" aria-controls="p-messages" aria-selected="false" tabindex="-1">Messages <b class="adm-badge" id="unreadBadge" hidden></b></button>
+      <button class="adm-tab" role="tab" type="button" id="t-stats" aria-controls="p-stats" aria-selected="false" tabindex="-1">Stats</button>
+    </div>
+
+    <!-- ============ CONTENT ============ -->
+    <div class="adm-panel" role="tabpanel" id="p-content" aria-labelledby="t-content">
+      <div class="adm-bar">
+        <p class="adm-state" id="saveState" aria-live="polite">Loading</p>
+        <div class="adm-actions">
+          <button class="btn btn-sm" type="button" id="discardBtn" disabled>Discard</button>
+          <button class="btn btn-sm" type="button" id="previewBtn">Preview</button>
+          <button class="btn btn-sm btn-fill" type="button" id="saveBtn" disabled>Save</button>
+        </div>
+      </div>
+      <div class="adm-alert" id="restoreBox" hidden></div>
+      <div class="adm-alert is-err" id="errBox" role="alert" hidden></div>
+      <div id="editor"></div>
+    </div>
+
+    <!-- ============ MESSAGES ============ -->
+    <div class="adm-panel" role="tabpanel" id="p-messages" aria-labelledby="t-messages" hidden>
+      <div class="adm-bar">
+        <p class="adm-state" id="msgState" aria-live="polite"></p>
+        <div class="adm-actions">
+          <div class="adm-seg" role="group" aria-label="Show">
+            <button type="button" class="is-on" data-filter="all" aria-pressed="true">All</button>
+            <button type="button" data-filter="unread" aria-pressed="false">Unread</button>
+          </div>
+          <button class="btn btn-sm" type="button" id="msgRefresh">Refresh</button>
+        </div>
+      </div>
+      <div class="adm-msgs" id="msgs">
+        <ul class="adm-list" id="msgList" aria-label="Messages"></ul>
+        <article class="adm-card adm-msg" id="msgView" hidden></article>
+      </div>
+      <button class="btn adm-more" type="button" id="msgMore" hidden>Load older messages</button>
+    </div>
+
+    <!-- ============ STATS ============ -->
+    <div class="adm-panel" role="tabpanel" id="p-stats" aria-labelledby="t-stats" hidden>
+      <div class="adm-bar">
+        <p class="adm-state" id="statState" aria-live="polite"></p>
+        <div class="adm-actions">
+          <div class="adm-seg" role="group" aria-label="Range">
+            <button type="button" data-days="7" aria-pressed="false">7 days</button>
+            <button type="button" class="is-on" data-days="30" aria-pressed="true">30 days</button>
+            <button type="button" data-days="90" aria-pressed="false">90 days</button>
+          </div>
+        </div>
+      </div>
+      <div id="stats"></div>
+    </div>
+  </section>
+</main>
+
+<div class="adm-toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="/js/config.js"></script>
+<script src="/js/backend.js"></script>
+<script src="/admin/admin.js"></script>
+</body>
+</html>
